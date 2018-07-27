@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- JAVA와 연결할 Mapper 파일 설정 -->
+<mapper namespace="poly.persistance.mapper.NoticeMapper">
+	<insert id="insertNotice" parameterType="NoticeDTO">
+		INSERT INTO NOTICE
+      	(
+      	NOTICE_NO,TITLE,CONTENTS,CNT,REG_DT
+      	)
+	    VALUES
+	    (
+	      NOTICE_SEQ.NEXTVAL,
+	      #{title},
+	      #{contents},
+	      #{cnt},
+	      SYSDATE
+	    )
+	</insert>
+	<select id="getNoticeList" resultType="NoticeDTO">
+		SELECT NOTICE_NO,
+			   TITLE,
+			   CONTENTS,
+			   CNT,
+			   REG_NO,
+			   REG_DT,
+			   CHG_NO,
+			   CHG_DT
+	      FROM NOTICE
+	</select>
+	<select id="getNoticeOnt" parameterType="NoticeDTO" resultType="NoticeDTO">
+		SELECT NOTICE_NO,
+			   TITLE,
+			   CONTENTS,
+			   CNT,
+			   REG_NO,
+			   REG_DT,
+			   CHG_NO,
+			   CHG_DT
+	      FROM NOTICE
+	     WHERE NOTICE_NO = #{notice_no} 
+	</select>
+	<delete id="deleteNotice" parameterType="NoticeDTO">
+		DELETE FROM NOTICE WHERE NOTICE_NO = #{notice_no}
+	</delete>
+	<update id="updateNoticeCnt" parameterType="string">
+		UPDATE NOTICE 
+		   SET CNT = CNT + 1
+		 WHERE NOTICE_NO = #{noticeNo}
+	</update>
+	<select id="getNotice" parameterType="string" resultType="NoticeDTO">
+		SELECT NOTICE_NO,
+			   TITLE,
+			   CONTENTS,
+			   CNT,
+			   REG_NO,
+			   REG_DT,
+			   CHG_NO,
+			   CHG_DT
+	      FROM NOTICE
+	     WHERE NOTICE_NO = #{noticeNo}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- JAVA와 연결할 Mapper 파일 설정 -->
+<mapper namespace="poly.persistance.mapper.MemberMapper">
+	<insert id="insertMember" parameterType="MemberDTO">
+		INSERT INTO MEMBER
+		(
+			MEMBER_NO,
+			MEMBER_NAME,
+			MEMBER_ADDR,
+			MEMBER_ADDRDETAIL,
+			ID,
+			PASSWORD,
+			REG_DT
+		)
+		VALUES
+		(
+			MEMBER_SEQ.NEXTVAL,
+			#{member_name},
+			#{member_addr},
+			#{member_addrDetail},
+			#{id},
+			#{password},
+			SYSDATE
+		)
+	</insert>
+	
+	<select id="getMemberList" resultType="MemberDTO">
+		SELECT MEMBER_NO,
+       		   MEMBER_NAME,
+       		   MEMBER_ADDR,
+       		   ID,
+       	       PASSWORD,
+       	       MEMBER_ADDRDETAIL,
+       		   REG_DT
+  		  FROM MEMBER	
+	</select>
+	<select id="getMemberDetail" parameterType="MemberDTO" resultType="MemberDTO">
+		SELECT MEMBER_NO,
+       		   MEMBER_NAME,
+       		   MEMBER_ADDR,
+       		   ID,
+       	       PASSWORD,
+       	       MEMBER_ADDRDETAIL,
+       		   REG_DT
+  		  FROM MEMBER
+  		 WHERE MEMBER_NO = #{member_no}
+	</select>
+	
+	<delete id="deleteMember" parameterType="MemberDTO" >
+		DELETE FROM MEMBER WHERE MEMBER_NO = #{member_no}
+	</delete>
+	
+	 <update id="updateMember" parameterType="MemberDTO">
+        UPDATE MEMBER
+           SET ID = #{id},
+               PASSWORD = #{password}, 
+               MEMBER_NAME = #{member_name},
+               MEMBER_ADDR = #{member_addr},
+               MEMBER_ADDRDETAIL = #{member_addrDetail},
+               CHG_DT = SYSDATE,
+               CHG_NO = #{member_no}
+         WHERE MEMBER_NO = #{member_no}
+     </update>
+   	
+	<select id="getLogin" parameterType="MemberDTO" resultType="MemberDTO">
+		SELECT MEMBER_NO,
+       		   MEMBER_NAME,
+       		   MEMBER_ADDR,
+       		   ID,
+       	       PASSWORD,
+       	       MEMBER_ADDRDETAIL,
+       		   REG_DT
+  		  FROM MEMBER
+  		 WHERE ID=#{id} AND PASSWORD=#{password}
+	</select>   	
+</mapper>
